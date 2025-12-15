@@ -394,7 +394,6 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  sprintBar: {fileID: 0}
 --- !u!143 &385810272
 CharacterController:
   m_ObjectHideFlags: 0
