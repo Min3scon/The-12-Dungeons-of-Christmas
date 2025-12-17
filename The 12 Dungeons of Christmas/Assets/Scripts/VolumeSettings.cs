@@ -1,84 +1,53 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-
 public class VolumeSettings : MonoBehaviour
 {
    public Slider masterVol;
    public Slider musicVol;
    public Slider sfxVol;
-
    public AudioMixer audioMixer;
-
-   void Awake()
+   private void Start()
    {
-       if (audioMixer == null)
-       {
-           Debug.LogError("[VOLUME] AudioMixer is NULL on " + gameObject.name);
-           enabled = false;
-           return;
-       }
-
-       if (masterVol == null || musicVol == null || sfxVol == null)
-       {
-           Debug.LogError("[VOLUME] One or more Sliders are NULL");
-           enabled = false;
-           return;
-       }
-
-       Debug.Log("[VOLUME] VolumeSettings active on " + gameObject.name);
-   }
-
-   void Start()
-   {
+       masterVol.onValueChanged.AddListener(delegate { SetMaster(); });
+       musicVol.onValueChanged.AddListener(delegate { SetMusic(); });
+       sfxVol.onValueChanged.AddListener(delegate { SetSFX(); });
+       masterVol.value = PlayerPrefs.GetFloat("MasterVol", 1f);
+       musicVol.value = PlayerPrefs.GetFloat("MusicVol", 1f);
+       sfxVol.value = PlayerPrefs.GetFloat("SFXVol", 1f);
        ApplyAll();
    }
-
    void ApplyAll()
    {
        SetMaster();
        SetMusic();
        SetSFX();
    }
-
    public void SetMaster()
    {
-       Apply("masterVol", masterVol.value);
+       SetVolume("MasterVol", masterVol.value);
+       PlayerPrefs.SetFloat("MasterVol", masterVol.value);
    }
-
    public void SetMusic()
    {
-       Apply("musicVol", musicVol.value);
+       SetVolume("MusicVol", musicVol.value);
+       PlayerPrefs.SetFloat("MusicVol", musicVol.value);
    }
-
    public void SetSFX()
    {
-       Apply("sfxVol", sfxVol.value);
+       SetVolume("SFXVol", sfxVol.value);
+       PlayerPrefs.SetFloat("SFXVol", sfxVol.value);
    }
-
-   void Apply(string param, float value)
+   void SetVolume(string parameter, float sliderValue)
    {
-       // 1️⃣ Try to read the parameter FIRST (existence check)
-       if (!audioMixer.GetFloat(param, out float before))
+       float dB;
+       if (sliderValue <= 0f)
+           dB = -80f;
+       else
+           dB = Mathf.Lerp(-80f, 0f, sliderValue);
+       if (!audioMixer.SetFloat(parameter, dB))
        {
-           Debug.LogError($"[VOLUME] Mixer parameter '{param}' DOES NOT EXIST or is not exposed");
-           return;
+           Debug.LogWarning("AudioMixer parameter missing: " + parameter);
        }
-
-       // 2️⃣ Set it
-       audioMixer.SetFloat(param, value);
-
-       // 3️⃣ Read back
-       audioMixer.GetFloat(param, out float after);
-
-       // 4️⃣ Validate change
-       if (Mathf.Abs(after - value) > 0.1f)
-       {
-           Debug.LogError($"[VOLUME] '{param}' NOT changing (set {value}, read {after})");
-           return;
-       }
-
-       // 5️⃣ Success log (once per call)
-       Debug.Log($"[VOLUME] '{param}' OK → {after} dB");
    }
 }
