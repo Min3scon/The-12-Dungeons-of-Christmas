@@ -1323,7 +1323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
@@ -1825,6 +1825,66 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988356341}
   m_CullTransparentMesh: 1
+--- !u!114 &174752057756798842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014386894456859420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078d4f52e8eb33a4ab892e6f76459954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuMusic: {fileID: 8300000, guid: 607c05a355168bf45bd156dc9cba2a6b, type: 3}
+  gameMusic: {fileID: 8300000, guid: cd85dda558ba7f047976f224c56055b0, type: 3}
+  musicGroup: {fileID: -5923087505782069932, guid: d8851633cbed6cf4faacaf6925b24391, type: 2}
+  fadeTime: 0.75
+  menuScenes:
+  - {fileID: 102900000, guid: e463ce427f9ba7542ae064ca6dd82f73, type: 3}
+  - {fileID: 102900000, guid: 2ab4d7f56a1e433479a5923135aa48ec, type: 3}
+  - {fileID: 102900000, guid: c204d66e2078a654284d48930054b7e4, type: 3}
+  gameScenes:
+  - {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
+  menuSceneNames:
+  - Options
+  - Main Menu
+  - Credits
+  gameSceneNames:
+  - SampleScene
+--- !u!4 &4564496059579316378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014386894456859420}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 826.7634, y: 227.2059, z: -8.740664}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6014386894456859420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4564496059579316378}
+  - component: {fileID: 174752057756798842}
+  m_Layer: 0
+  m_Name: Music
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1834,3 +1894,4 @@ SceneRoots:
   - {fileID: 1304570794}
   - {fileID: 121021253}
   - {fileID: 99760975}
+  - {fileID: 4564496059579316378}
