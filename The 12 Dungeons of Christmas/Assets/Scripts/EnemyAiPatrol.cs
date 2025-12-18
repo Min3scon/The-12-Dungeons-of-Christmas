@@ -66,11 +66,6 @@ public class EnemyAiPatrol : MonoBehaviour
         {
             int bit = 1 << player.layer;
             if ((playerLayer.value & bit) == 0) playerLayer |= bit;
-            Debug.Log($"{name}: Found player '{player.name}' on layer '{LayerMask.LayerToName(player.layer)}' ({player.layer}).");
-        }
-        else
-        {
-            Debug.LogWarning($"{name}: No player found. Tag your player 'Player'.");
         }
 
         if (NavMesh.SamplePosition(transform.position, out var hit, 2f, NavMesh.AllAreas))
@@ -89,7 +84,6 @@ public class EnemyAiPatrol : MonoBehaviour
         {
             if (!warnedOffNavMesh)
             {
-                Debug.LogWarning($"{name}: Agent not on NavMesh. Place on blue area or rebake.");
                 warnedOffNavMesh = true;
             }
             return;
@@ -106,11 +100,11 @@ public class EnemyAiPatrol : MonoBehaviour
 
         State s = State.Patrol;
         if (playerInsight && !playerInAttackRange) s = State.Chase;
-        if (playerInsight && playerInAttackRange) s = State.Attack;
+        if (playerInsight && playerInAttackRange) s = State.
+        Attack;
 
         if (s != lastState)
         {
-            Debug.Log($"{name} state: {s} | inSight={playerInsight} inAttack={playerInAttackRange} mask={playerLayer.value}");
             lastState = s;
         }
 

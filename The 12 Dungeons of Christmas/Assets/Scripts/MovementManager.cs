@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class MovementManager : MonoBehaviour
 {
@@ -8,7 +10,6 @@ public class MovementManager : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 6f;
     public float sprintSpeed = 10f;
-    public float jumpHeight = 1.5f;
     public float gravity = 9.81f;
 
     [Header("Sprint")]
@@ -65,26 +66,31 @@ public class MovementManager : MonoBehaviour
 
     void Update()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance + controller.height / 2f, groundMask);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance + controller.height / 2f, groundMask); //Raycast down to check grounded
 
         if (isGrounded && velocity.y < 0)
+        {
             velocity.y = -2f;
-
+        }   
+            
+        //Inputs
         float moveZ = Input.GetAxis("Vertical");
         float moveX = Input.GetAxis("Horizontal");
+
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
 
-        bool wantsToSprint = Input.GetKey(KeyCode.LeftShift);
+        bool wantsToSprint = Input.GetKey(KeyCode.LeftShift);   
+        
         if (wantsToSprint && currentSprint > 0f && move.magnitude > 0.1f)
         {
             isSprinting = true;
-            currentSprint -= Time.deltaTime;
+            currentSprint -= Time.deltaTime;           
         }
         else
         {
             isSprinting = false;
         }
-
+             
         if (!isSprinting && currentSprint < maxSprint)
             currentSprint += Time.deltaTime * (maxSprint / regenTime);
 
@@ -93,8 +99,7 @@ public class MovementManager : MonoBehaviour
         float speed = isSprinting ? sprintSpeed : moveSpeed;
         controller.Move(move * speed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
-            velocity.y = Mathf.Sqrt(jumpHeight * 2f * gravity);
+
 
         velocity.y -= gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
